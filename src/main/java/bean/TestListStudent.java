@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class TestListStudent implements Serializable {
 	private String subjectName;
-	private String subject;
+	private String subjectCd;
 	private int num;
 	private int point;
 	/**
@@ -22,14 +22,14 @@ public class TestListStudent implements Serializable {
 	/**
 	 * @return subject
 	 */
-	public String getSubject() {
-		return subject;
+	public String getSubjectCd() {
+		return subjectCd;
 	}
 	/**
 	 * @param subject セットする subject
 	 */
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setSubjectCd(String subject) {
+		this.subjectCd = subject;
 	}
 	/**
 	 * @return num
