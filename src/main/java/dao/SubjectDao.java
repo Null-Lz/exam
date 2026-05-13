@@ -102,26 +102,26 @@ public class SubjectDao extends Dao {
 		return list;
 	}
 
-	public boolean save(Subject subject) throws Exception { 
+	public boolean save(Subject subject) throws Exception {
 		Connection connection = getConnection();
-	
+
 		PreparedStatement statement = null;
-	
+
 		int count = 0;
 
 		try {
-		
+
 			statement = connection.prepareStatement("insert into subject(cd, name, school_cd) values(?, ?, ?)");
-	
+
 			statement.setString(1, subject.getCd());
 			statement.setString(2, subject.getName());
 			statement.setString(3, subject.getSchool().getCd());
-	
+
 			count = statement.executeUpdate();
 		} catch (Exception e) {
 			throw e;
 		} finally {
-		
+
 			if (statement != null) {
 				try {
 					statement.close();
@@ -129,7 +129,7 @@ public class SubjectDao extends Dao {
 					throw sqle;
 				}
 			}
-		
+
 			if (connection != null) {
 				try {
 					connection.close();
@@ -140,14 +140,15 @@ public class SubjectDao extends Dao {
 		}
 
 		if (count > 0) {
-	
+
 			return true;
 		} else {
-	
+
 			return false;
 		}
-		
+
 	}
+	
 
 	public boolean delete(Subject subject) throws Exception {
 
