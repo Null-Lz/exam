@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Test;
 
 public class TestDao extends Dao {
@@ -78,7 +77,7 @@ public class TestDao extends Dao {
             test.setPoint(rSet.getInt("point"));
 
             test.setStudent(sDao.get(rSet.getString("student_no"), school));
-            test.setSubject(subDao.get(rSet.getString("subject_cd")));
+            test.setSubject(subDao.get(rSet.getString("subject_cd"),school));
 
             list.add(test);
         }

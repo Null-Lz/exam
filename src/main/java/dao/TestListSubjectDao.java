@@ -7,9 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import bean.School;
+import bean.Subject;
 import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
@@ -33,8 +32,8 @@ public class TestListSubjectDao extends Dao {
 
             tls.setEntYear(rSet.getInt("ent_year"));
             tls.setClassNum(rSet.getString("class_num"));
-            tls.setSubjectCd(rSet.getString("subject_cd"));
-            tls.setNum(rSet.getInt("num"));
+            tls.setStudentNo(rSet.getString("student_no"));
+            tls.setStudentName(rSet.getString("student_name"));
 
             list.add(tls);
         }
