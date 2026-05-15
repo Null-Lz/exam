@@ -29,7 +29,8 @@ public class SubjectListAction extends Action {
 		req.setAttribute("subjects", subject_set);
 		req.getRequestDispatcher("subject_list.jsp").forward(req,res);
 		
-                                                        
+              
+		
 		}                                                                                                                        
 }                                                                                                                                
                                                                                                                                  
