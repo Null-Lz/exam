@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Test implements Serializable {
 	private Student student;
-	private String className;
+	private String classNum;
 	private Subject subject;
 	private School school;
 	private int no;
@@ -22,16 +22,16 @@ public class Test implements Serializable {
 		this.student = student;
 	}
 	/**
-	 * @return className
+	 * @return classNum
 	 */
-	public String getClassName() {
-		return className;
+	public String getClassNum() {
+		return classNum;
 	}
 	/**
-	 * @param className セットする className
+	 * @param classNum セットする classNum
 	 */
-	public void setClassName(String className) {
-		this.className = className;
+	public void setClassNum(String classNum) {
+		this.classNum = classNum;
 	}
 	/**
 	 * @return subject
@@ -81,4 +81,6 @@ public class Test implements Serializable {
 	public void setPoint(int point) {
 		this.point = point;
 	}
+	
+	
 }
