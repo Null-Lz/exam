@@ -190,4 +190,85 @@ public class TestDao extends Dao {
 
         return count > 0;
     }
+    public List<Test> search(String studentNo, School school) throws Exception {
+
+        List<Test> list = new ArrayList<>();
+
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+
+        try {
+            String sql = baseSql + " and student_no = ? order by subject_cd, no";
+
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, school.getCd());
+            statement.setString(2, studentNo);
+
+            ResultSet rSet = statement.executeQuery();
+
+            list = postFilter(rSet, school);
+
+        } catch (Exception e) {
+            throw e;
+
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return list;
+    }
+    public List<Test> filter(
+    		String entYear,
+    		String classNum,
+    		String subjectCd,
+    		School school
+    ) throws Exception {
+
+    	List<Test> list = new ArrayList<>();
+
+    	Connection connection = getConnection();
+
+    	PreparedStatement statement = null;
+
+    	try {
+
+    		String sql =
+    			"select t.* " +
+    			"from test t " +
+    			"join student s on t.student_no = s.no " +
+    			"where s.ent_year = ? " +
+    			"and s.class_num = ? " +
+    			"and t.subject_cd = ? " +
+    			"and t.school_cd = ? " +
+    			"order by t.student_no";
+
+    		statement = connection.prepareStatement(sql);
+
+    		statement.setInt(1, Integer.parseInt(entYear));
+    		statement.setString(2, classNum);
+    		statement.setString(3, subjectCd);
+    		statement.setString(4, school.getCd());
+
+    		ResultSet rSet = statement.executeQuery();
+
+    		list = postFilter(rSet, school);
+
+    	} finally {
+
+    		if (statement != null) {
+    			statement.close();
+    		}
+
+    		if (connection != null) {
+    			connection.close();
+    		}
+    	}
+
+    	return list;
+    }
 }
