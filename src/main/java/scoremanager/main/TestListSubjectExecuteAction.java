@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bean.Subject;
 import bean.Teacher;
-import bean.Test;
+import bean.TestListSubject;
 import dao.ClassNumDao;
 import dao.SubjectDao;
-import dao.TestDao;
+import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,9 +29,9 @@ public class TestListSubjectExecuteAction extends Action {
 		String classNum = "";
 		String subjectCd = "";
 
-		List<Test> testList = null;
+		List<TestListSubject> testList = null;
 
-		TestDao testDao = new TestDao();
+		TestListSubjectDao testlistsubjectDao = new TestListSubjectDao();
 
 		Map<String, String> errors = new HashMap<>();
 
@@ -40,6 +41,12 @@ public class TestListSubjectExecuteAction extends Action {
 		subjectCd = req.getParameter("subjectCd");
 
 		// ビジネスロジック
+		
+		int entYearint = Integer.parseInt(entYear);
+		SubjectDao subjectdao = new SubjectDao();
+		Subject subject =  subjectdao.get(subjectCd,teacher.getSchool());
+		
+		
 		if (entYear == null || entYear.isEmpty()
 			|| classNum == null || classNum.isEmpty()
 			|| subjectCd == null || subjectCd.isEmpty()) {
@@ -49,10 +56,10 @@ public class TestListSubjectExecuteAction extends Action {
 		} else {
 
 			testList =
-				testDao.filter(
-					entYear,
+				testlistsubjectDao.filter(
+					entYearint,
 					classNum,
-					subjectCd,
+					subject,
 					teacher.getSchool()
 				);
 

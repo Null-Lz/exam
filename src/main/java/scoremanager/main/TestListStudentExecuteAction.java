@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bean.Student;
 import bean.Teacher;
-import bean.Test;
+import bean.TestListStudent;
 import dao.ClassNumDao;
+import dao.StudentDao;
 import dao.SubjectDao;
-import dao.TestDao;
+import dao.TestListStudentDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -23,13 +25,16 @@ public class TestListStudentExecuteAction extends Action {
 		Teacher teacher = (Teacher) session.getAttribute("user");
 		
 		//ローカル変数の宣言 1
-		String student_no = "";
-		List<Test> testList = null;
-		TestDao testDao = new TestDao();
+		
+		StudentDao studentDao = new StudentDao();
+		
+		List<TestListStudent> testList = null;
+		TestListStudentDao testListStudentDao = new TestListStudentDao();
 		Map<String, String> errors = new HashMap<>();
 
 		//リクエストパラメータ―の取得 2
-		student_no = req.getParameter("studentNo");
+		String student_no = req.getParameter("studentNo");
+		Student student = studentDao.get(student_no.trim());
 		
 		//DBからデータ取得 3
 		//なし
@@ -39,7 +44,7 @@ public class TestListStudentExecuteAction extends Action {
 			errors.put("student", "学生番号を入力してください");
 			req.setAttribute("errors", errors);
 		} else {
-			testList = testDao.search(student_no, teacher.getSchool());
+			testList = testListStudentDao.filter(student);
 
 			if (testList == null || testList.size() == 0) {
 				errors.put("student", "成績情報が存在しませんでした");
@@ -53,7 +58,7 @@ public class TestListStudentExecuteAction extends Action {
 		//レスポンス値をセット 6
 		if (testList != null && testList.size() > 0) {
 			req.setAttribute("studentName",
-				testList.get(0).getStudent().getName());
+				student.getName());
 		}
 		
 		req.setAttribute("studentNo", student_no);
