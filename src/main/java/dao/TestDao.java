@@ -247,4 +247,14 @@ public class TestDao extends Dao {
 		}
 	}
 
+	public List<Test> search(String student_no, School school) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	public List<Test> filter(String entYear, String classNum, String subjectCd, School school) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 }
