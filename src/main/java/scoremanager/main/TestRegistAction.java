@@ -6,10 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import bean.School;
 import bean.Subject;
 import bean.Teacher;
@@ -17,6 +13,9 @@ import bean.Test;
 import dao.ClassNumDao;
 import dao.SubjectDao;
 import dao.TestDao;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
 public class TestRegistAction extends Action {
@@ -64,7 +63,7 @@ public class TestRegistAction extends Action {
 		// リストを初期化
 		List<Integer> entYearSet = new ArrayList<>();
 		// 10年前から10年後まで年をリストに追加
-		for (int i = year - 10; i < year + 11; i++) {
+		for (int i = 2020; i <= 2025; i++) {
 			entYearSet.add(i);
 		}
 
