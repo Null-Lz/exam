@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,50 +102,56 @@ public class SubjectDao extends Dao {
 	}
 
 	public boolean save(Subject subject) throws Exception {
-		Connection connection = getConnection();
 
+		Connection connection = getConnection();
 		PreparedStatement statement = null;
 
 		int count = 0;
 
 		try {
 
-			statement = connection.prepareStatement("insert into subject(cd, name, school_cd) values(?, ?, ?)");
+			// 既存データ確認
+			Subject old = get(subject.getCd(), subject.getSchool());
 
-			statement.setString(1, subject.getCd());
-			statement.setString(2, subject.getName());
-			statement.setString(3, subject.getSchool().getCd());
+			if (old == null) {
+
+				// 新規登録
+				statement = connection.prepareStatement(
+					"insert into subject(cd, name, school_cd) values(?, ?, ?)");
+
+				statement.setString(1, subject.getCd());
+				statement.setString(2, subject.getName());
+				statement.setString(3, subject.getSchool().getCd());
+
+			} else {
+
+				// 更新
+				statement = connection.prepareStatement(
+					"update subject set name = ? where cd = ? and school_cd = ?");
+
+				statement.setString(1, subject.getName());
+				statement.setString(2, subject.getCd());
+				statement.setString(3, subject.getSchool().getCd());
+			}
 
 			count = statement.executeUpdate();
+
 		} catch (Exception e) {
+
 			throw e;
+
 		} finally {
 
 			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
+				statement.close();
 			}
 
 			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
+				connection.close();
 			}
 		}
 
-		if (count > 0) {
-
-			return true;
-		} else {
-
-			return false;
-		}
-
+		return count > 0;
 	}
 	
 
@@ -182,6 +187,7 @@ public class SubjectDao extends Dao {
 			}
 		}
 
+		
 		return count > 0;
 	}
 }

@@ -33,7 +33,7 @@
 								<td>${subject.cd}</td>
 								<td>${subject.name}</td>
 								<td>
-									<a href="SubjectUpdate.action?code=${subject.cd}">
+									<a href="SubjectUpdate.action?cd=${subject.cd}">
 										変更
 									</a>
 								</td>
